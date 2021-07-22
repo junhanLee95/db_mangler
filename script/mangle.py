@@ -30,9 +30,7 @@ class Mangler:
         for k, v in self.kmap.items():
             if old_k == "":
                 kl = len(k)
-                self.kmap[k] = prefix(self.PREFIX_LEN, k).ljust(kl, '0')
-            elif suffix(self.PREFIX_LEN, old_k) == suffix(self.PREFIX_LEN, k):
-                self.kmap[k] = prefix(self.PREFIX_LEN, self.kmap[k]) + suffix(PREIFX_LEN, self.kmap[old_k])
+                self.kmap[k] = "".ljust(kl, '0')
             else:
                 kl = len(k)
                 okl = len(old_k)
@@ -42,7 +40,7 @@ class Mangler:
                     if(k[i] != old_k[i]):
                         break
                     i = i + 1
-                self.kmap[k] = (prefix(self.PREFIX_LEN, k) + self.kmap[old_k][self.PREFIX_LEN:i] + k[i]).ljust(kl, '0')
+                self.kmap[k] = (self.kmap[old_k][:i] + k[i]).ljust(kl, '0')
             old_k = k
 
     def vmangle(self):
@@ -74,7 +72,7 @@ def main():
                 if not line:
                     break
                 k, v = getItemFromLine(line)
-                kmap[k] = v
+                kmap[k[4:]] = v
     kmangler = Mangler(kmap, kmap_files, 'k')
     kmangler.mangle()
     kmangler.mangle_write(dict_path+"sst_kmap_mangle.csv")

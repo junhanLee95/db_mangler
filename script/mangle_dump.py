@@ -49,11 +49,9 @@ def main():
                     data_block_start = True
                 if (data_block_start and line.find('HEX') != -1):
                     k, v = getItemFromLine(line)
-                    new_k = k_dict[k]
+                    new_k = k[:4] +  k_dict[k[4:]]
                     new_v = v_dict[v]
                     new_line = line.replace(k, new_k).replace(v, new_v)
-                    print(new_line)
-                    print('-----------')
                     mangled_sst.write(new_line)
         mangled_sst.close()
     
