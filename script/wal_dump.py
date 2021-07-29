@@ -22,7 +22,7 @@ def case_finder(query) :
 
 def main() :
 	bin_path = "../bin/"
-	db_path = "../db_export/db/"
+	db_path = "../db_export/db.wal/"
 	dict_path = "../mangled_map/"
 
 	db_wal_files = glob.glob(db_path + "*.log")
