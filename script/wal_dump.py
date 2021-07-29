@@ -69,14 +69,15 @@ def main() :
 				i = 1
 				j = 4
 				while i <= int(strings[1]) :
+				# we write keys and values without the first two data, since that is '0x' which is not necessary
 
 					if case_finder(strings[j]) == "KV" :
-						kmap.write(strings[j + 1] + "	\n")
-						vmap.write(strings[j + 2] + "	\n")
+						kmap.write(strings[j + 1][2:] + "	\n")
+						vmap.write(strings[j + 2][2:] + "	\n")
 						j = j + 3
 
 					elif case_finder(strings[j]) == "K" :
-						kmap.write(strings[j + 1] + "	\n")
+						kmap.write(strings[j + 1][2:] + "	\n")
 						j = j + 2
 
 					elif case_finder(strings[j]) == "NOOP" :

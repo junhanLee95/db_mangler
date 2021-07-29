@@ -66,16 +66,18 @@ def main():
     kmap_files = glob.glob(dict_path+"*_kmap.csv")
     kmap = {}
     for kmap_filei in kmap_files:
+        print('open ' + kmap_filei)
         with open(kmap_filei, 'r', errors='ignore') as kmap_file:
             while True:
                 line = kmap_file.readline()
                 if not line:
                     break
                 k, v = getItemFromLine(line)
-                kmap[k[4:]] = v
+                kmap[k[4:]] = 1 # exclude prefix key
+    kmap = OrderedDict(sorted(kmap.items(), key=lambda t:t[0]))
     kmangler = Mangler(kmap, kmap_files, 'k')
     kmangler.mangle()
-    kmangler.mangle_write(dict_path+"sst_kmap_mangle.csv")
+    kmangler.mangle_write(dict_path+"kmap_mangle.csv")
 # value mangling
     vmap_files = glob.glob(dict_path+"*_vmap.csv")
     vmap = {}
@@ -86,10 +88,11 @@ def main():
                 if not line:
                     break
                 k, v = getItemFromLine(line)
-                vmap[k] = v
+                vmap[k] = 1
+    vmap = OrderedDict(sorted(vmap.items(), key=lambda t:t[0]))
     vmangler = Mangler(vmap, vmap_files, 'v')
     vmangler.mangle()
-    vmangler.mangle_write(dict_path+"sst_vmap_mangle.csv")
+    vmangler.mangle_write(dict_path+"vmap_mangle.csv")
 
 if __name__ == "__main__":
     main()
